@@ -132,19 +132,11 @@
         document.getElementById("Titulo").value = "";
         document.getElementById("Texto").value = "";
 
-        document.getElementById("TagsSelecionadas").selectedIndex = -1;
-        document.getElementById("UsuarioId").selectedIndex = -1;
+        document.getElementById("ProdutosSelecionados").selectedIndex = -1;
 
         document.getElementById("contadorTitulo").textContent = "Caracteres restantes: 30";
 
         document.getElementById("contadorTexto").textContent = "Caracteres restantes: 100";
-    }
-
-
-    function limparCamposUsuario() {
-        document.getElementById("Nome").value = "";
-        document.getElementById("Senha").value = "";
-        document.getElementById("Email").value = "";
     }
 
     function limitarDescricao() {
@@ -200,40 +192,4 @@
 
         return true; 
     }
-
-
-    function validarFormularioUsuario() {
-        var nomeInserido = document.getElementById("Nome").value;
-        var senhaInserida = document.getElementById("Senha").value;
-        var emailInserido = document.getElementById("Email").value;
-
-        if (nomeInserido == '') {
-            $.alert({
-                title: 'Informação',
-                content: "Por informe, o nome.",
-            });
-            return false;
-        }
-
-        if (senhaInserida == '') {
-            $.alert({
-                title: 'Informação',
-                content: "Por favor, informe a senha.",
-            });
-
-            return false;
-        }
-
-        if (emailInserido == '') {
-            $.alert({
-                title: 'Informação',
-                content: "Por favor, informe o email.",
-            });
-
-            return false;
-        }
-
-        return true;
-    }
-
 </script>
