@@ -1,0 +1,73 @@
+﻿@model Ability.Web.Models.Pedido
+
+<div id="confirmarExclusaoElement" data-message="@TempData["Message"]" type="hidden"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <form asp-controller="Pedidos" form asp-action="Create" onsubmit="return validarFormulario()">
+                <h1 class="mt-1" style="font-size: 20px;">@(Model.Id == 0 ? "Cadastro" : "Edição")</h1>
+                <div class="form-group">
+                    <label for="Titulo">Título:</label>
+                    <input type="text" class="form-control" id="Titulo" name="Titulo" value="@Model.Titulo" oninput="limitarTitulo()">
+                    <p id="contadorTitulo"></p>
+                    <span asp-validation-for="Titulo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Texto">Texto:</label>
+                    <textarea class="form-control" id="Texto" name="Texto" rows="5" oninput="limitarTexto()">@Model.Texto</textarea>
+                    <p id="contadorTexto"></p>
+                    <span asp-validation-for="Texto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ProdutosSelecionados">Produtos:</label>
+                    <select multiple class="form-control" id="ProdutosSelecionados" name="ProdutosSelecionados">
+                        @foreach (var tag in ViewBag.Produtos as SelectList)
+                        {
+                            <option value="@tag.Value">@tag.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="PedidoItens" class="text-danger"></span>
+                </div>
+                <p></p>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-sm btn-primary my-2 my-sm-0 form-control form-control-sm">
+                            @{
+                                var buttonText = Model.Id == 0 ? "Criar Pedido" : "Salvar Edição";
+                                @Html.Raw(buttonText);
+                            }
+                        </button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-sm btn-success my-2 my-sm-0 form-control form-control-sm" onclick="limparCampos()">Limpar Campos</button>
+                    </div>
+                </div>
+                <p></p>
+
+                <div class="form-group">
+                    <a class="btn btn-sm btn-secondary my-2 my-sm-0 form-control form-control-sm" asp-action="Index" data-toggle="tooltip" title="Cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function definirOpcoesSelecionadas() {
+        var produtosSelecionados = @Html.Raw(Json.Serialize(Model.PedidoItens?.Select(nt => nt.PedidoId).ToList()));
+
+        document.getElementById("ProdutosSelecionados").value = produtosSelecionados;
+    }
+
+    // Chame a função ao carregar a página para definir as opções selecionadas
+    window.onload = definirOpcoesSelecionadas;
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_CustomConfirm");
+    }
+}

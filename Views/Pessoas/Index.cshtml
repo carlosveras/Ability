@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Ability.Web.Models.Pessoa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addPessoa">Add Pessoa</button>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Idade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PessoaId" class="bi bi-pencil-square" fill="currentColor" tooltip="Editar" title="Editar"></a>
+                    <a asp-action="Details" asp-route-id="@item.PessoaId" class="bi bi-info-circle" fill="currentColor" title="Detalhes"></a>
+                    <a asp-action="Delete" asp-route-id="@item.PessoaId" class="bi bi-trash" fill="currentColor" title="Excluir"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@await Html.PartialAsync("_CreatePartialView", new Pessoa())
